@@ -8,7 +8,7 @@ This project uses a custom OpenAI gym environment that feeds the agent a picture
 It is programmed with modularity in mind. It should be fairly easy to hook in other actions, observations, rewards or any other functions you may want.  
 Learning and decision making is completely handled by Stable-Baselines3 using PPO and the custom environment.  
 The code is written 100% in python for Windows11.  
-It runs at ~24fps on my i9 13900k CPU with the game running normally on my GPU.  
+It runs at ~2.4fps on my i9 13900k CPU with the game running normally on my GPU.  
 
 # Other
 - You should probably launch Elden Ring in offline mode if you dont want to end up getting banned from online play. I am not doing that and I havent been banned yet though...  
