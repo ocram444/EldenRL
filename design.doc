@@ -1,0 +1,48 @@
+hmm... so...
+Elden Ring Ai that integrated with Twitch chat. That's a good idea. I like it. But what do we need to do to make it happen?
+
+✔️❌🚧
+
+🚧An Ai that plays Elden Ring
+    ✔️Fight bosses
+    ❌Fight non boss enemies
+    ❌Flee from non boss enemies
+    ❌Fight pvp players
+    ❌Explore the world
+
+🚧Integration with Twitch chat
+    ❌chat can equip items/spells on the Ai
+    🚧Chat can perform actions (movement, dodge, attack, block, jump attack, roll catch attack, heal, weapon art, dual wield, crouch, etc)
+    ❌Chat can perform emotes (dance, cheer, bow, etc)
+    ❌Chat can respec the Ai stats completely
+    ❌Chat can fast travel
+    ❌Long distance movement in open world
+    ❌Join pvp matches (start a queue)
+    ❌Change boss (every 10 tries we do a poll to see what boss we should fight another boss from the to do list)
+
+
+
+Twitch fun integration
+
+✔️Grabbing the messages and deciding what function to call
+    ❌use the messages we already have if that works or grab messages in a different way. Maybe because we will be using channel points the messages might not work
+    ✔️ Twitch dosnt allow small channels to use channel points so we need to use normal chat messages
+
+
+
+
+
+
+
+
+
+REFACTORING
+
+❌Adjust the code for pvp
+❌Add running attacks and some other actions
+❌Add a debug mode for the ai program (like rendering the ai's vision and stuff)
+❌Refactor the code
+❌Improve the documentation
+❌Make a video explaining how the ai works
+
+

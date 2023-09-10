@@ -50,9 +50,10 @@ DISCRETE_ACTIONS = {'release_wasd': 'release_wasd', #📍 All the action the age
                     'a': 'run_left',
                     'd': 'run_right',
                     'shift': 'dodge',
-                    'u': 'attack',
-                    'i': 'strong_attack',
-                    'o': 'magic',
+                    'c': 'attack',
+                    'v': 'strong_attack',
+                    'x': 'magic',
+                    'q': 'weapon_art',
                     'e': 'use_item'}
 
 N_DISCRETE_ACTIONS = len(DISCRETE_ACTIONS)    #📍 The number of actions the agent can take  (This is actually used to define the action space) (9 actions)
@@ -114,6 +115,7 @@ class EldenEnv(gym.Env):
         #self.boss_hp_end_history = []          #📍 array of the boss hp at the end of each run (not implemented)
         self.action_history = []                #📍 array of the actions that the agent took. (see oneHotPrevActions and the observation space)
         self.time_since_heal = time.time()      #📍 time since the last heal
+        self.action_name = ''                   #📍 name of the action for logging
         
 
     #📍 Grabbing the screenshot of the game
@@ -135,33 +137,52 @@ class EldenEnv(gym.Env):
             pydirectinput.keyUp('a')
             pydirectinput.keyUp('d')
             #print('🔪 movement released')
+            self.action_name = 'stop'
         elif action == 1:
             pydirectinput.keyUp('w')
             pydirectinput.keyUp('s')
             pydirectinput.keyDown('w')
+            self.action_name = 'w'
         elif action == 2:
             pydirectinput.keyUp('w')
             pydirectinput.keyUp('s')
             pydirectinput.keyDown('s')
+            self.action_name = 's'
         elif action == 3:
             pydirectinput.keyUp('a')
             pydirectinput.keyUp('d')
             pydirectinput.keyDown('a')
+            self.action_name = 'a'
         elif action == 4:
             pydirectinput.keyUp('a')
             pydirectinput.keyUp('d')
             pydirectinput.keyDown('d')
+            self.action_name = 'd'
         elif action == 5:
             pydirectinput.press('shift')    #dodge
+            self.action_name = 'dodge'
         elif action == 6:
-            pydirectinput.press('u')        #light attack
+            pydirectinput.press('c')        #light attack
+            self.action_name = 'attack'
         elif action == 7:
-            pydirectinput.press('i')        #heavy attack
+            pydirectinput.press('v')        #heavy attack
+            self.action_name = 'heavy'
         elif action == 8:
-            pydirectinput.press('o')        #magic
-        elif action == 9 and time.time() - self.time_since_heal > 1.5: #📍 to prevent spamming heal we only allow it to be pressed every 1.5 seconds
+            pydirectinput.press('x')        #magic
+            self.action_name = 'magic'
+        elif action == 9:                   #weapon art
+            pydirectinput.press('q')
+            self.action_name = 'skill'
+        elif action == 10 and time.time() - self.time_since_heal > 1.5: #📍 to prevent spamming heal we only allow it to be pressed every 1.5 seconds
             pydirectinput.press('e')        #item
             self.time_since_heal = time.time()
+            self.action_name = 'heal'
+        #more actions:
+            #charged heavy attack
+            #weapon art
+            #running attack
+            #spam running attack (roll catch)
+            #delayed dodge (escape roll catch) x4 for each direction
         #if action != 0:
             #print('🔪 action taken: ' + str(action))
         
@@ -256,12 +277,18 @@ class EldenEnv(gym.Env):
             #📍 Making the print pretty
             self.reward = round(self.reward, 0)
             reward_with_spaces = str(self.reward)
-            for i in range(4 - len(reward_with_spaces)):
+            for i in range(5 - len(reward_with_spaces)):
                 reward_with_spaces = ' ' + reward_with_spaces
             max_reward_with_spaces = str(self.max_reward)
-            for i in range(4 - len(max_reward_with_spaces)):
+            for i in range(5 - len(max_reward_with_spaces)):
                 max_reward_with_spaces = ' ' + max_reward_with_spaces
-            print('🐾 Iteration: ' + str(self.iteration) + '| FPS: ' + current_fps + '| Reward: ' + reward_with_spaces + '| Max Reward: ' + max_reward_with_spaces + '| Action: ' + str(action))
+            #same for the action
+            for i in range(7 - len(str(self.action_name))):
+                self.action_name = ' ' + self.action_name
+            #same for fps
+            for i in range(5 - len(current_fps)):
+                current_fps = ' ' + current_fps
+            print('🐾 Iteration: ' + str(self.iteration) + '| FPS: ' + current_fps + '| Reward: ' + reward_with_spaces + '| Max Reward: ' + max_reward_with_spaces + '| Action: ' + str(self.action_name))
         else:
             print('🐾✔️ Reward: ' + str(self.reward) + '| Max Reward: ' + str(self.max_reward))
         #📍 5. Returning the observation, the reward, if we are done, and the info
@@ -270,6 +297,21 @@ class EldenEnv(gym.Env):
 
     #📍 Reset puts the environment back to the initial state so the next episode can start
     def reset(self):
+        if self.death:
+            #read the number from ./deathCounter.txt
+            f = open("deathCounter.txt", "r")
+            deathCounter = int(f.read())
+            f.close()
+            #increment the number
+            deathCounter += 1
+            #write the number to ./deathCounter.txt
+            f = open("deathCounter.txt", "w")
+            f.write(str(deathCounter))
+            f.close()
+        if self.boss_death:
+            #if you want to handle the boss death differently you can do it here
+            print('Boss dead!')
+            
         #📍 1. Clear any held down keys
         #📍 2. Calculate the average reward for the last run and print it
         #📍 3. Checking for loading screen / waiting some time for sucessful reset
@@ -317,24 +359,24 @@ class EldenEnv(gym.Env):
             #📝 Maybe we need a frame limiter here?
 
             if loading_screen:
-                print("Loading Screen:", loading_screen) #Loading Screen: True
+                print("⌛ Loading Screen:", loading_screen) #Loading Screen: True
                 loading_screen_flag = True
                 t_since_seen_next = time.time()
             else:   #📍 If we dont see "next" on the screen we are not in the loading screen [anymore]
                 if loading_screen_flag:
-                    print('Loading screen seen. Walk back to boss will start in 2.5 seconds...')
+                    print('⌛ After loading screen. Walk to boss will start in 2.5 seconds...')
                 else:
-                    print('No loading screen. Step loop will start in 20seconds or after loading screen. Please enter a boss arena or die...')
+                    print('⌛ Waiting for loading screen...')
                 
             if not t_since_seen_next is None and ((time.time() - t_check_frozen_start) > 7.5) and (time.time() - t_since_seen_next) > 2.5:  #📍 We were in a loading screen and left it. (Start step after 2.5 seconds not seeling a loading screen)
-                print('✔️ Left loading screen #1')
+                print('⌛✔️ Left loading screen #1')
                 break
             elif not t_since_seen_next is None and  ((time.time() - t_check_frozen_start) > 60):                                            #📍 We have been in a loading screen for 60 seconds. We assume the game is frozen
-                print('❌ Left loading screen #2 (Frozen)')
+                print('⌛❌ Left loading screen #2 (Frozen)')
                 #some sort of error handling here...
                 break
             elif t_since_seen_next is None and ((time.time() - t_check_frozen_start) > 20):                                                 #📍 We have not entered a loading screen for 20 seconds. (Start step after 20 seconds for the first try only of training loop)
-                print('✔️ No loading screen found #3')
+                print('⌛✔️ No loading screen found #3')
                 break
             #📝 elif any of the other conditions are met:
                 #📝 we could do something like staying in this loop until we see a full boss health bar then press the lock on key and start the next step loop. this way we would have automatic initiation of the next step.
