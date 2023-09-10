@@ -56,7 +56,7 @@ class EldenEnv(gym.Env):
         pytesseract.pytesseract.tesseract_cmd = PYTESSERACT_PATH        #Setting the path to pytesseract.exe            
         self.sct = mss.mss()                                            #Initializing CV2 and MSS (used to take screenshots)
         self.reward = 0                                                 #Reward of the previous step
-        self.rewardGen = EldenReward()                                  #Setting up the reward generator class
+        self.rewardGen = EldenReward(DEBUG_MODE)                                  #Setting up the reward generator class
         self.death = False                                              #If the agent died
         self.t_start = time.time()                                      #Time when the training started
         self.done = False                                               #If the game is done

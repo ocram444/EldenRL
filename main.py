@@ -31,3 +31,19 @@ if __name__ == '__main__':
 #📝 1. We need to be able to set our vigor stat somewhere. And the hp bar detection needs to be based on that. (in EldenReward)
     #📝 1.1 Implement the vigor-hp csv file and make sure it works with the hp bar detection (how much hp the player has based on his vigor (how long the ho bar is))   (in EldenReward)
 #📝 2 Finally fix the health bar reading. Computer vision is weird... (in EldenReward)
+
+
+#for elden reward:
+#📝 To do:
+#📝 Implement the vigor-hp csv file and make sure it works with the hp bar detection
+#📝 Same for stamina!
+#📝 Finally fix the health bar reading. Computer vision is weird...
+"""
+HP_CHART = {}
+#📍  saving the vigor chart from the csv file into variables
+with open('vigor_chart.csv', 'r') as v_chart:
+    for line in v_chart.readlines():
+        stat_point = int(line.split(',')[0])
+        hp_amount = int(line.split(',')[1])
+        HP_CHART[stat_point] = hp_amount
+"""
