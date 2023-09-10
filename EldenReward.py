@@ -8,13 +8,14 @@ class EldenReward:
 
 
     '''Constructor'''
-    def __init__(self, DEBUG_MODE):
+    def __init__(self, DEBUG_MODE, player_hp, player_stamina):
         self.DEBUG_MODE = DEBUG_MODE
-        self.max_hp = 396                           #This is the hp value of your character(9 vigor). We need this to capture the right length of the hp bar. #📝 Ideally we create a function that takes the vigor stat of the player and returns the max hp.
+        self.max_hp = player_hp                           #This is the hp value of your character(9 vigor). We need this to capture the right length of the hp bar.
         self.prev_hp = 1.0     
         self.curr_hp = 1.0
         self.time_since_dmg_taken = time.time()
         self.death = False
+        self.max_stam = player_stamina                     
         self.curr_stam = 1.0
         self.curr_boss_hp = 1.0
         self.prev_boss_hp = 1.0
@@ -49,11 +50,12 @@ class EldenReward:
 
     '''Detecting the current player stamina'''
     def get_current_stamina(self, frame):
-        stam_image = frame[86:89, 155:155 + 279]                                #Cut out the stamina bar from the frame !!This is hard coded for my stamina bar!!
+        STAM_RATIO = 3.0                                                        #Constant to calculate the length of the stamina bar
+        stam_image = frame[86:89, 155:155 + int(self.max_stam * STAM_RATIO) - 20] #Cut out the stamina bar from the frame
         if self.DEBUG_MODE: self.render_frame(stam_image)
 
-        lower = np.array([0,100,0])                                             #Filter the image for the correct shade of green
-        upper = np.array([150,255,150])                                         #Also Filter
+        lower = np.array([6,52,24])                                             #This filter really inst perfect but its good enough bcause stamina is not that important
+        upper = np.array([74,255,77])                                           #Also Filter
         hsv = cv2.cvtColor(stam_image, cv2.COLOR_RGB2HSV)                       #Apply the filter
         mask = cv2.inRange(hsv, lower, upper)                                   #Also apply
         if self.DEBUG_MODE: self.render_frame(mask)
@@ -109,7 +111,7 @@ class EldenReward:
         '''📍0 Getting/Setting current values'''
         self.curr_hp = self.get_current_hp(frame)                   
         self.curr_stam = self.get_current_stamina(frame)            
-        self.curr_boss_hp = self.get_boss_hp(frame)             
+        self.curr_boss_hp = self.get_boss_hp(frame)           
 
         self.death = False
         if self.curr_hp <= 0.01 + self.image_detection_tolerance:   #If our hp is below 1% we are dead
@@ -179,3 +181,7 @@ class EldenReward:
 
         return total_reward, self.death, self.boss_death
         
+
+
+
+

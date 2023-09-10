@@ -2,15 +2,18 @@ import train
 
 if __name__ == '__main__':
     '''User Settings'''
+    PYTESSERACT_PATH = r'C:\Program Files\Tesseract-OCR\tesseract.exe' # Set the path
     RESUME_TRAINING = False     #Start training from a saved model or create a new model
-    DEBUG_MODE = False          #Renders the AI vision
+    DEBUG_MODE = False          #Renders the AI vision (pretty scuffed)
+
     GAME_MODE = "PVP"           #PVP or PVE
     BOSS = 1                    #1-6 for PVE (look at walkToBoss.py for boss names) | Is ignored for GAME_MODE PVP
-    PYTESSERACT_PATH = r'C:\Program Files\Tesseract-OCR\tesseract.exe' # Set the path
+    PLAYER_HP = 396             #Set the player hp (used for hp bar detection)
+    PLAYER_STAMINA = 94         #Set the player stamina (used for stamina bar detection)
     
     '''Start Training'''
     print("💍 EldenRL 💍")
-    train.train(RESUME_TRAINING, DEBUG_MODE, GAME_MODE, BOSS, PYTESSERACT_PATH)
+    train.train(PYTESSERACT_PATH, RESUME_TRAINING, DEBUG_MODE, GAME_MODE, BOSS, PLAYER_HP, PLAYER_STAMINA)
 
 
 #🚦 OK here is what you need to do to run this:
@@ -24,26 +27,4 @@ if __name__ == '__main__':
     #🚦 5.2 When the reset function is done, the agent will take over and start taking actions
     #🚦 5.3 The step function will repeat and take actions until it is determined to be done (the agent dies, the boss dies, or the fight takes more than 10minutes)
     #🚦 6 train.py will then save the model and start the next episode (the next reset)
-
-
-#📝 To do:
-#📝 0. 
-#📝 1. We need to be able to set our vigor stat somewhere. And the hp bar detection needs to be based on that. (in EldenReward)
-    #📝 1.1 Implement the vigor-hp csv file and make sure it works with the hp bar detection (how much hp the player has based on his vigor (how long the ho bar is))   (in EldenReward)
-#📝 2 Finally fix the health bar reading. Computer vision is weird... (in EldenReward)
-
-
-#for elden reward:
-#📝 To do:
-#📝 Implement the vigor-hp csv file and make sure it works with the hp bar detection
-#📝 Same for stamina!
-#📝 Finally fix the health bar reading. Computer vision is weird...
-"""
-HP_CHART = {}
-#📍  saving the vigor chart from the csv file into variables
-with open('vigor_chart.csv', 'r') as v_chart:
-    for line in v_chart.readlines():
-        stat_point = int(line.split(',')[0])
-        hp_amount = int(line.split(',')[1])
-        HP_CHART[stat_point] = hp_amount
-"""
+#||| Move this to the readme file |||

@@ -3,7 +3,7 @@ import os
 from EldenEnv import EldenEnv
 
 
-def train(RESUME_TRAINING, DEBUG_MODE, GAME_MODE, BOSS, PYTESSERACT_PATH):
+def train(PYTESSERACT_PATH, RESUME_TRAINING, DEBUG_MODE, GAME_MODE, BOSS, PLAYER_HP, PLAYER_STAMINA):
 	print("🧠 Training will start soon. This can take a while to initialize...")
 
 
@@ -24,7 +24,7 @@ def train(RESUME_TRAINING, DEBUG_MODE, GAME_MODE, BOSS, PYTESSERACT_PATH):
 
 
 	'''Initializing environment'''
-	env = EldenEnv(DEBUG_MODE, GAME_MODE, BOSS, PYTESSERACT_PATH)
+	env = EldenEnv(PYTESSERACT_PATH, DEBUG_MODE, GAME_MODE, BOSS, PLAYER_HP, PLAYER_STAMINA)
 	print("🧠 EldenEnv initialized...")
 
 

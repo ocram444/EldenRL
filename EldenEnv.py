@@ -38,7 +38,7 @@ class EldenEnv(gym.Env):
     """Custom Elden Ring Environment that follows gym interface"""
 
 
-    def __init__(self, DEBUG_MODE, GAME_MODE, BOSS, PYTESSERACT_PATH):
+    def __init__(self, PYTESSERACT_PATH, DEBUG_MODE, GAME_MODE, BOSS, PLAYER_HP, PLAYER_STAMINA):
         '''Setting up the environment'''
         super(EldenEnv, self).__init__()
 
@@ -56,7 +56,7 @@ class EldenEnv(gym.Env):
         pytesseract.pytesseract.tesseract_cmd = PYTESSERACT_PATH        #Setting the path to pytesseract.exe            
         self.sct = mss.mss()                                            #Initializing CV2 and MSS (used to take screenshots)
         self.reward = 0                                                 #Reward of the previous step
-        self.rewardGen = EldenReward(DEBUG_MODE)                                  #Setting up the reward generator class
+        self.rewardGen = EldenReward(DEBUG_MODE, PLAYER_HP, PLAYER_STAMINA)  #Setting up the reward generator class
         self.death = False                                              #If the agent died
         self.t_start = time.time()                                      #Time when the training started
         self.done = False                                               #If the game is done
@@ -96,7 +96,7 @@ class EldenEnv(gym.Env):
     '''Rendering the frame for debugging'''
     def render_frame(self, frame):                
         cv2.imshow('debug-render', frame)
-        cv2.waitKey(10000)
+        cv2.waitKey(100)
         cv2.destroyAllWindows()
 
     
