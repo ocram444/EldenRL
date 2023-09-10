@@ -7,7 +7,7 @@ from gym import spaces
 import pydirectinput
 import pytesseract                              # Pytesseract is not just a simple pip install.
 from EldenReward import EldenReward
-from walkToBoss import walk_to_boss             #Hard coded paths for walking to the boss.
+from walkToBoss import walkToBoss
 
 
 N_CHANNELS = 3                                  #Image format
@@ -69,7 +69,7 @@ class EldenEnv(gym.Env):
         self.action_name = ''                                           #Name of the action for logging
         self.DEBUG_MODE = DEBUG_MODE                                    #If we are in debug mode
         self.GAME_MODE = GAME_MODE                                      #If we are in PVP or PVE mode
-        self.BOSS = BOSS                                                #Which boss we are fighting
+        self.walk_to_boss_class = walkToBoss(BOSS)                      #Class to walk to the boss
     
 
     '''One hot encoding of the last 10 actions'''
@@ -339,7 +339,7 @@ class EldenEnv(gym.Env):
 
         '''📍 4. Walking to the boss'''
         print("🔄👹 walking to boss")
-        walk_to_boss(self.BOSS)                     #This is hard coded in walkToBoss.py
+        self.walk_to_boss_class.walk_to_boss()                     #This is hard coded in walkToBoss.py
 
         if self.death:                              #Death counter in txt file
             f = open("deathCounter.txt", "r")
