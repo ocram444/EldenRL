@@ -22,49 +22,27 @@ import time
                     'f': 'enter_fog_gate'
 """
 
-
-"""
-#1 Beastman of Farum Azula  (watch out this dosnt actually work)
-def walk_to_boss():     #This can go into a seperate file                                             #📍 This is hard coded for every boss
-        print("👉👹 walking #0 down up to the wolf")
-        pydirectinput.keyDown('shift')
-        pydirectinput.keyDown('w')
-        pydirectinput.keyDown('a')
-        time.sleep(0.8)
-        pydirectinput.keyUp('a')
-        time.sleep(6)
-        pydirectinput.keyDown('d')
-        time.sleep(0.8)
-        pydirectinput.keyUp('d')
-        time.sleep(4)
-        print("👉👹 walking #1 at the wolf")
-        pydirectinput.keyDown('d')
+def put_on_lantern():
+        pydirectinput.press('esc')
         time.sleep(0.5)
-        pydirectinput.keyUp('d')
-        time.sleep(3)
-        print("👉👹 walking #2 to the fog gate")
-        pydirectinput.keyDown('a')
+        #right arrow
+        pydirectinput.press('right')
         time.sleep(0.5)
-        pydirectinput.keyUp('a')
-        time.sleep(2)
-        pydirectinput.keyDown('a')
+        #e
+        pydirectinput.press('e')
+        time.sleep(1.5)
+        #esc
+        pydirectinput.press('esc')
         time.sleep(0.5)
-        pydirectinput.keyUp('a')
-        pydirectinput.keyUp('w')
-        pydirectinput.keyUp('shift')
-        pydirectinput.press('f')
-        time.sleep(3)
-        print("👉👹 walking #3 lock on to the boss")
-        pydirectinput.keyDown('w')
-        time.sleep(0.8)
-        pydirectinput.keyUp('w')
-        pydirectinput.press('tab')
-        print("👉👹 walking done")
-"""
 
 
-#2 Margit, The fell Omen
+
+
+
+'''
+#1 Margit, The fell Omen
 def walk_to_boss():
+        put_on_lantern()
         print("👉👹 walking #0 to the fog gate")
         pydirectinput.keyDown('shift')
         pydirectinput.keyDown('w')
@@ -86,6 +64,249 @@ def walk_to_boss():
         pydirectinput.keyUp('w')
         pydirectinput.press('tab')
         print("👉👹 walking done")
+'''
+
+
+'''
+#2 Beastman of Farum Azula
+def walk_to_boss():     #This can go into a seperate file                                             #📍 This is hard coded for every boss
+        put_on_lantern()
+        print("👉👹 walking #0 from the bonfire")
+        pydirectinput.keyDown('w')
+        pydirectinput.keyDown('a')
+        time.sleep(1.2)
+        pydirectinput.keyUp('a')
+        time.sleep(2.5)
+        pydirectinput.keyDown('d')
+        time.sleep(0.5)
+        pydirectinput.keyUp('d')
+        pydirectinput.keyDown('a')
+        time.sleep(0.2)
+        pydirectinput.keyUp('a')
+        time.sleep(4)
+        print("👉👹 walking #1 around the corner")
+        pydirectinput.keyDown('d')
+        time.sleep(1)
+        pydirectinput.keyUp('d')
+        time.sleep(3)
+        print("👉👹 walking #2 start sprinting")
+        pydirectinput.keyDown('shift')
+        time.sleep(2.5)
+        print("👉👹 walking #3 to the fog gate")
+        pydirectinput.keyDown('d')
+        time.sleep(0.7)
+        pydirectinput.keyUp('d')
+        time.sleep(2)
+        pydirectinput.keyDown('a')
+        time.sleep(0.5)
+        pydirectinput.keyUp('a')
+        time.sleep(1)
+        pydirectinput.keyDown('a')
+        time.sleep(0.2)
+        pydirectinput.keyUp('a')
+        time.sleep(0.6)
+        pydirectinput.keyUp('shift')
+        pydirectinput.keyUp('w')
+        pydirectinput.press('f')
+        time.sleep(3.7)
+        print("👉👹 walking #4 lock on to the boss")
+        pydirectinput.keyDown('w')
+        pydirectinput.press('tab')
+        time.sleep(1)
+        pydirectinput.keyUp('w')
+'''
+
+
+
+"""
+#3 Scally misbegotten   (⚔️ Slain)
+def walk_to_boss():
+        put_on_lantern()
+        print("👉👹 walking #0 from the bonfire")
+        pydirectinput.keyDown('shift')
+        pydirectinput.keyDown('w')
+        time.sleep(4)
+        pydirectinput.keyDown('a')
+        print("👉👹 walking #1 around the corner")
+        time.sleep(1.5)
+        pydirectinput.keyUp('a')
+        print("👉👹 walking #2 fall down ledge")
+        time.sleep(8)
+        pydirectinput.keyDown('a')
+        print("👉👹 walking #3 around the corner")
+        time.sleep(1.3)
+        pydirectinput.keyUp('a')
+        print("👉👹 walking #4 to the fog gate")
+        time.sleep(8)
+        pydirectinput.keyUp('w')
+        pydirectinput.keyUp('shift')
+        pydirectinput.press('f')
+        time.sleep(3.2)
+        print("👉👹 walking #1 lock on to the boss")
+        pydirectinput.keyDown('w')
+        pydirectinput.press('shift')
+        time.sleep(1)
+        pydirectinput.keyUp('w')
+        pydirectinput.press('tab')
+        print("👉👹 walking done")
+"""
+"""
+#4 Patches      (⚔️ Slain) (buggy)
+def walk_to_boss():
+        put_on_lantern()
+        print("👉👹 walking #0 from the bonfire")
+        pydirectinput.keyDown('shift')
+        pydirectinput.keyDown('w')
+        time.sleep(2.1)
+        print("👉👹 walking #1 around the corner")
+        pydirectinput.keyDown('d')
+        time.sleep(0.6)
+        pydirectinput.keyUp('d')
+        time.sleep(0.35)
+        pydirectinput.keyDown('d')
+        time.sleep(0.3)
+        pydirectinput.keyUp('d')
+        time.sleep(0.8)
+        print("👉👹 walking #2 around that same corner")
+        pydirectinput.keyDown('d')
+        time.sleep(0.4)
+        pydirectinput.keyUp('d')
+        time.sleep(0.1)
+        pydirectinput.keyDown('d')      
+        time.sleep(0.1)
+        pydirectinput.keyUp('d')
+        pydirectinput.keyDown('a')
+        time.sleep(0.4)
+        pydirectinput.keyUp('a')
+        print("👉👹 walking #3 walking straight")
+        time.sleep(3)
+        print("👉👹 walking #4 around the corner")
+        pydirectinput.keyDown('d')
+        time.sleep(1.8)
+        print("👉👹 walking #5 down the path")
+        pydirectinput.keyUp('d')
+        time.sleep(2.5)
+        print("👉👹 walking #6 to the fog gate")
+        pydirectinput.keyDown('d')
+        time.sleep(0.5)
+        pydirectinput.keyUp('d')
+        time.sleep(2)
+
+        pydirectinput.keyUp('w')
+        pydirectinput.keyUp('shift')
+        pydirectinput.press('f')
+        time.sleep(3.7)
+        print("👉👹 walking #7 lock on to the boss")
+        pydirectinput.keyDown('w')
+        time.sleep(1.2)
+        pydirectinput.keyUp('w')
+        pydirectinput.press('tab')
+        print("👉👹 walking done")
+        """
+
+#4 Erdtree burrial watchdog
+'''
+def walk_to_boss():
+        put_on_lantern()
+        print("👉👹 walking #0 from the bonfire")
+        pydirectinput.keyDown('shift')
+        pydirectinput.keyDown('w')
+        time.sleep(4.1)
+        print("👉👹 walking #1 around the corner")
+        pydirectinput.keyDown('d')
+        time.sleep(1.7)
+        pydirectinput.keyUp('d')
+        print("👉👹 walking #2 to the fog gate")
+        time.sleep(10)
+        pydirectinput.keyUp('w')
+        pydirectinput.keyUp('shift')
+        pydirectinput.press('f')
+        time.sleep(3.7)
+        print("👉👹 walking #3 lock on to the boss")
+        pydirectinput.keyDown('w')
+        time.sleep(0.5)
+        pydirectinput.keyUp('w')
+        pydirectinput.press('tab')
+        print("👉👹 walking done")
+'''
+
+'''
+#5 Graven warden duelist        (badly buggy)
+def walk_to_boss():
+        put_on_lantern()
+        print("👉👹 walking #0 from the bonfire")
+        pydirectinput.keyDown('shift')
+        pydirectinput.keyDown('w')
+        time.sleep(8.3)
+        print("👉👹 walking #1 around the corner")
+        pydirectinput.keyDown('d')
+        time.sleep(1.76)
+        pydirectinput.keyUp('d')
+        print("👉👹 walking #2 down the hallway")
+        time.sleep(1.5)
+        pydirectinput.keyUp('shift')
+        time.sleep(0.9)
+        print("👉👹 walking #3 spam dodge")
+        pydirectinput.keyUp('shift')
+        pydirectinput.press('shift')
+        time.sleep(0.1)
+        pydirectinput.press('shift')
+        time.sleep(0.15)
+        pydirectinput.press('shift')
+        time.sleep(0.15)
+        pydirectinput.press('shift')
+        time.sleep(0.1)
+        pydirectinput.press('shift')
+        pydirectinput.keyDown('w')
+        pydirectinput.keyDown('shift')
+        time.sleep(6)
+        pydirectinput.keyUp('w')
+        pydirectinput.keyUp('shift')
+        pydirectinput.press('f')
+        time.sleep(3.7)
+        print("👉👹 walking #4 lock on to the boss")
+        pydirectinput.press('tab')
+        pydirectinput.keyDown('w')
+        time.sleep(0.5)
+        pydirectinput.keyUp('w')
+        print("👉👹 walking done")
+'''
+
+
+#6 Mad Punpkinhead
+def walk_to_boss():
+        put_on_lantern()
+        print("👉👹 walking #0 from the bonfire")
+        pydirectinput.keyDown('shift')
+        pydirectinput.keyDown('w')
+        time.sleep(2)
+        print("👉👹 walking #1 to the ruins")
+        pydirectinput.keyDown('d')
+        time.sleep(1)
+        pydirectinput.keyUp('d')
+        pydirectinput.keyDown('a')
+        time.sleep(0.85)
+        pydirectinput.keyUp('a')
+        time.sleep(1.8)
+        print("👉👹 walking #2 into the basement")
+        pydirectinput.keyUp('shift')
+        pydirectinput.keyDown('a')
+        time.sleep(1.5)
+        pydirectinput.keyUp('a')
+        pydirectinput.keyDown('d')
+        time.sleep(4)
+        pydirectinput.keyUp('d')
+        time.sleep(4.5)
+        pydirectinput.keyUp('w')
+        pydirectinput.keyUp('shift')
+        pydirectinput.press('f')
+        time.sleep(3.7)
+        print("👉👹 walking #3 lock on to the boss")
+        pydirectinput.press('tab')
+        time.sleep(0.1)
+        print("👉👹 walking done")
+
+
 
 
 
@@ -93,7 +314,7 @@ def walk_to_boss():
 
 
 #🐜 Run the function to test it
-"""
+
 def test():
     print("👉👹 3")
     time.sleep(1)
@@ -102,5 +323,6 @@ def test():
     print("👉👹 1")
     time.sleep(1)
     walk_to_boss()
-test()
-"""
+
+if __name__ == "__main__":
+    test()
