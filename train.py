@@ -14,7 +14,7 @@ print("🧠 Hello. Training will start soon. This can take a while to initialize
 
 RESUME = True			#📍 If true, the model will be loaded from the model_path and continue training from there. If false, a new model will be created.
 TIMESTEPS = 1			#📍 How many times the model.learn() calles itself before the code after it is executed. With the variable being 1 the function model.save() is called after each learn() call.
-HORIZON_WINDOW = 200	#📍 This is the number of steps the model will take in EldenEnv() before one model.learn() TIMESTEP is finished. The agent maybe takes ~50 steps in one death so this is ~4 deaths. ~2min
+HORIZON_WINDOW = 500	#📍 This is the number of steps the model will take in EldenEnv() before one model.learn() TIMESTEP is finished. The agent maybe takes ~50 steps in one death so this is ~4 deaths. ~2min
 
 
 # Create log and model directories if they don't exist
