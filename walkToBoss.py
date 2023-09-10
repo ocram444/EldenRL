@@ -39,7 +39,7 @@ def put_on_lantern():
 
 
 
-'''
+
 #1 Margit, The fell Omen
 def walk_to_boss():
         put_on_lantern()
@@ -64,7 +64,7 @@ def walk_to_boss():
         pydirectinput.keyUp('w')
         pydirectinput.press('tab')
         print("👉👹 walking done")
-'''
+
 
 
 '''
@@ -272,7 +272,7 @@ def walk_to_boss():
         print("👉👹 walking done")
 '''
 
-
+'''
 #6 Mad Punpkinhead
 def walk_to_boss():
         put_on_lantern()
@@ -305,7 +305,7 @@ def walk_to_boss():
         pydirectinput.press('tab')
         time.sleep(0.1)
         print("👉👹 walking done")
-
+'''
 
 
 

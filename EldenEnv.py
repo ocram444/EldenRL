@@ -308,9 +308,11 @@ class EldenEnv(gym.Env):
             f = open("deathCounter.txt", "w")
             f.write(str(deathCounter))
             f.close()
+        '''    
         if self.boss_death:
             #if you want to handle the boss death differently you can do it here
             print('Boss dead!')
+        '''
             
         #📍 1. Clear any held down keys
         #📍 2. Calculate the average reward for the last run and print it
