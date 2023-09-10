@@ -41,7 +41,7 @@ def put_on_lantern():
 
 
 #1 Margit, The fell Omen
-def walk_to_boss():
+def walk_to_boss(BOSS):
         put_on_lantern()
         print("👉👹 walking #0 to the fog gate")
         pydirectinput.keyDown('shift')
