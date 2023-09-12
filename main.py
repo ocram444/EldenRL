@@ -12,9 +12,9 @@ if __name__ == '__main__':
         "PLAYER_STAMINA": 118,  #Set the player stamina (used for stamina bar detection)
         "DESIRED_FPS": 24       #Set the desired fps (used for actions per second) (24 = 2.4 actions per second) #not implemented yet       #My CPU (i9-13900k) can run the training at about 2.4SPS (steps per secons)
     }
-    RESUME_TRAINING = False     #Resum training fro a saved model or create a new model (True = resume training | False = create new model)
+    CREATE_NEW_MODEL = True     #Create a new model or resume training for an existing model
 
     
     '''Start Training'''
     print("💍 EldenRL 💍")
-    train.train(RESUME_TRAINING, config)
+    train.train(CREATE_NEW_MODEL, config)

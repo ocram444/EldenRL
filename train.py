@@ -3,7 +3,7 @@ import os
 from EldenEnv import EldenEnv
 
 
-def train(RESUME_TRAINING, config):
+def train(CREATE_NEW_MODEL, config):
 	print("🧠 Training will start soon. This can take a while to initialize...")
 
 
@@ -29,7 +29,7 @@ def train(RESUME_TRAINING, config):
 
 
 	'''Creating new model or loading existing model'''
-	if not RESUME_TRAINING:
+	if CREATE_NEW_MODEL:
 		model = PPO('MultiInputPolicy',
 							env,
 							tensorboard_log=logdir,
