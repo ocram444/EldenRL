@@ -77,6 +77,7 @@ class EldenEnv(gym.Env):
         self.MONITOR = config["MONITOR"]                                            #Monitor to use
         self.DEBUG_MODE = config["DEBUG_MODE"]                                      #If we are in debug mode
         self.GAME_MODE = config["GAME_MODE"]                                        #If we are in PVP or PVE mode
+        self.DESIRED_FPS = config["DESIRED_FPS"]                                    #Desired FPS (not implemented yet)
         if self.GAME_MODE == "PVE": self.walk_to_boss = walkToBoss(config["BOSS"])  #Class to walk to the boss
         else : 
             self.matchmaking = walkToBoss(99)                           #Matchmaking class for PVP mode
@@ -334,7 +335,7 @@ class EldenEnv(gym.Env):
 
         '''FPS LIMITER'''
         t_end = time.time()                                             
-        desired_fps = (1 / 24)                                          #My CPU (i9-13900k) can run the training at about 2.4SPS (steps per secons)
+        desired_fps = (1 / self.DESIRED_FPS)                            #My CPU (i9-13900k) can run the training at about 2.4SPS (steps per secons)
         time_to_sleep = desired_fps - (t_end - t_start)
         if time_to_sleep > 0:
             time.sleep(time_to_sleep)
