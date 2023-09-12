@@ -318,9 +318,7 @@ class walkToBoss:
                 pydirectinput.press('e')
                 time.sleep(0.5)
                 pydirectinput.press('e')
-                time.sleep(0.5)
-                pydirectinput.press('esc')
-                print("⚔️ ")
+                print("⚔️ PvP Matchmaking")
 
         '''PvP Duel Arena Lockon'''
         def duel_arena_lockon(self):
