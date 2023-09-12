@@ -169,7 +169,7 @@ class EldenReward:
             hp_reward = -420                                                        #Large negative reward for dying
 
         time_since_taken_dmg_reward = 0                                    
-        if time.time() - self.time_since_dmg_taken > 7:                             #Reward if we have not taken damage for 7 seconds (every step for as long as we dont take damage)
+        if time.time() - self.time_since_dmg_taken > 5:                             #Reward if we have not taken damage for 7 seconds (every step for as long as we dont take damage)
             time_since_taken_dmg_reward = 25
 
 
@@ -208,14 +208,17 @@ class EldenReward:
                 if time.time() - self.time_since_pvp_damaged > 5:                   #Negative reward if we have not damaged the enemy for 5 seconds (every step for as long as we dont damage the enemy)
                     pvp_reward = -25
                     #print("🔫 Duelist not damaged for 5s")
+                else:
+                    pvp_reward = 0
 
             #staying alive reward
+            '''                     #a time alive reward could cause problems because the agent will still get rewarded even if performing bad when the time alive reward is higher than the other punishments
             time_alive_reward = 0
             if time.time() - self.time_alive > 5:                                   #Reward if we have been alive for 5 seconds (we give an increasinig reward for every second we are alive)
                 time_alive_reward = time.time() - self.time_alive - 5
-                #print("🕒 Time alive reward: ", time_alive_reward)
+                print("🕒 Time alive reward: ", time_alive_reward)
                 pvp_reward += time_alive_reward
-            
+            '''
 
             #winning
             self.game_won = self.detect_win(frame)    #not implemented yet
@@ -263,5 +266,5 @@ if __name__ == "__main__":
     
             
     reward.update(frame)
-    print("🧠 Done...")
+    print(" Done...")
 """
