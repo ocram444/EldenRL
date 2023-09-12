@@ -3,7 +3,7 @@ import train
 if __name__ == '__main__':
     '''User Settings'''
     PYTESSERACT_PATH = r'C:\Program Files\Tesseract-OCR\tesseract.exe' # Set the path
-    RESUME_TRAINING = True     #Start training from a saved model or create a new model
+    RESUME_TRAINING = False     #Start training from a saved model or create a new model
     DEBUG_MODE = False          #Renders the AI vision (pretty scuffed)
     GAME_MODE = "PVP"           #PVP or PVE
     BOSS = 1                    #1-6 for PVE (look at walkToBoss.py for boss names) | Is ignored for GAME_MODE PVP
