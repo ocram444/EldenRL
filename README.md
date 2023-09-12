@@ -3,6 +3,8 @@ Reinforcement Learning for Elden Ring on Windows11.
   
 The goal of this project is to create a basic working version of a reinforcement learning agent for Elden Ring. The agent should be able to fight all bosses if trained long enough on them.
 
+![Component 1](https://github.com/ocram444/EldenRL/assets/113638653/4a6ce798-4797-43a1-a48c-1ed20cf88d12)
+
 # Description
 This project uses a custom OpenAI gym environment that feeds the agent a picture of the game, previous actions, and health. The agent then decides an action to take and is rewarded based on damage delt to the boss, damage taken and some other rewards. For now only bosses behind fog gates (no open world bosses) are implemented but it shouldnt be too hard to adjust the code for open world bosses too.  
 It is programmed with modularity in mind. It should be fairly easy to hook in other actions, observations, rewards or any other functions you may want.  
