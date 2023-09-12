@@ -18,11 +18,3 @@ if __name__ == '__main__':
     '''Start Training'''
     print("💍 EldenRL 💍")
     train.train(CREATE_NEW_MODEL, config)
-
-
-
-
-
-    # This is what an update looks like.
-    # Now the model is saved and can be loaded and further trained.
-    # Alright thats it for this video. Thanks for watching and see you in the next one.
