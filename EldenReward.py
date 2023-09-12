@@ -235,36 +235,3 @@ class EldenReward:
         total_reward = round(total_reward, 3)
 
         return total_reward, self.death, self.boss_death, self.game_won
-        
-
-
-
-
-'''Debug Code'''   
-"""
-if __name__ == "__main__":
-    time.sleep(3)
-    import mss
-    sct = mss.mss()
-    
-    GAME_MODE = "PVP"           #PVP or PVE
-    DEBUG_MODE = False          #Renders the AI vision (pretty scuffed)
-    PLAYER_HP = 2140            #Set the player hp (used for hp bar detection)
-    PLAYER_STAMINA = 118        #Set the player stamina (used for stamina bar detection)
-    RESUME_TRAINING = False     #Start training from a saved model or create a new model
-    BOSS = 1                    #1-6 for PVE (look at walkToBoss.py for boss names) | Is ignored for GAME_MODE PVP
-    PYTESSERACT_PATH = r'C:\Program Files\Tesseract-OCR\tesseract.exe' # Set the path
-
-    '''Display the fame cutouts...'''
-    reward = EldenReward(PYTESSERACT_PATH, GAME_MODE, DEBUG_MODE, PLAYER_HP, PLAYER_STAMINA)
-    monitor = sct.monitors[1]
-    sct_img = sct.grab(monitor)
-    frame = cv2.cvtColor(np.asarray(sct_img), cv2.COLOR_BGRA2RGB)
-    frame = frame[46:1080 + 46, 12:1920 + 12]    #cut the frame to the size of the game
-    #if DEBUG_MODE:
-    #    render_frame(frame)
-    
-            
-    reward.update(frame)
-    print(" Done...")
-"""
