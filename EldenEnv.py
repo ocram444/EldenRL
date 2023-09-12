@@ -198,8 +198,17 @@ class EldenEnv(gym.Env):
             self.time_since_heal = time.time()
             self.action_name = 'heal'
         elif action == 99:
-            #warp back to bonfire
-            #idk how
+            pydirectinput.press('esc')
+            time.sleep(0.5)
+            pydirectinput.press('right')
+            time.sleep(0.4)
+            pydirectinput.press('right')
+            time.sleep(0.4)
+            pydirectinput.press('e')
+            time.sleep(1.5)
+            #esc
+            pydirectinput.press('esc')
+            time.sleep(0.5)
             print('🔥')
 
 
