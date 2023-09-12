@@ -40,10 +40,11 @@ REFACTORING
 
 ❌Adjust the code for pvp
 ❌Add running attacks and some other actions
-❌Add a debug mode for the ai program (like rendering the ai's vision and stuff)
-❌Refactor the code
+✔️Add a debug mode for the ai program (like rendering the ai's vision and stuff)
+✔️Refactor the code
+✔️Add state based health/stamina bar detection
 ❌Improve the documentation
 ❌Make a video explaining how the ai works
-❌Make a main file that runs the ai
+✔️Make a main file that runs the ai
 
 

@@ -7,11 +7,12 @@ class walkToBoss:
 
         '''Constructor'''
         def __init__(self, BOSS):
-                self.BOSS = BOSS
+                self.BOSS = BOSS        #Boss number | 99/100 reserved for PVP
 
 
         '''Walk to boss function'''
-        def walk_to_boss(self):
+        def perform(self):
+                '''PVE'''
                 if self.BOSS == 1:
                         self.boss1()
                 elif self.BOSS == 2:
@@ -24,6 +25,13 @@ class walkToBoss:
                         self.boss5()
                 elif self.BOSS == 6:
                         self.boss6()
+
+                #'''PVP'''
+                elif self.BOSS == 99:
+                        self.matchmaking()
+                elif self.BOSS == 100:
+                        self.duel_arena_lockon()
+
                 else:
                         print("👉👹 Boss not found")
 
@@ -300,6 +308,26 @@ class walkToBoss:
                 pydirectinput.press('tab')
                 time.sleep(0.1)
                 print("👉👹 walking done")
+        
+        '''PvP Matchmaking'''
+        def matchmaking(self):
+                pydirectinput.press('f')
+                time.sleep(0.5)
+                pydirectinput.press('up')
+                time.sleep(0.5)
+                pydirectinput.press('e')
+                time.sleep(0.5)
+                pydirectinput.press('e')
+                time.sleep(0.5)
+                pydirectinput.press('esc')
+                print("⚔️ ")
+
+        '''PvP Duel Arena Lockon'''
+        def duel_arena_lockon(self):
+                time.sleep(2)
+                pydirectinput.press('tab')
+                time.sleep(0.1)
+                print("⚔️ Duelist locked on")
 
 
 
