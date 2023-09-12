@@ -11,13 +11,23 @@ if __name__ == '__main__':
     PLAYER_HP = 2140             #Set the player hp (used for hp bar detection)
     PLAYER_STAMINA = 118         #Set the player stamina (used for stamina bar detection)
     DESIRED_FPS = 24            #Set the desired fps (used for actions per second) (24 = 2.4 actions per second) #not implemented yet
-    #uh stettings variable to store all the settings in one argument
-
     MONITOR = 1                 #Set the monitor to use (1,2,3)
+
+    config = {
+        "PYTESSERACT_PATH": PYTESSERACT_PATH,
+        "DEBUG_MODE": DEBUG_MODE,
+        "GAME_MODE": GAME_MODE,
+        "BOSS": BOSS,
+        "PLAYER_HP": PLAYER_HP,
+        "PLAYER_STAMINA": PLAYER_STAMINA,
+        "DESIRED_FPS": DESIRED_FPS,
+        "MONITOR": MONITOR
+    }
+
     
     '''Start Training'''
     print("💍 EldenRL 💍")
-    train.train(MONITOR, PYTESSERACT_PATH, RESUME_TRAINING, DEBUG_MODE, GAME_MODE, BOSS, PLAYER_HP, PLAYER_STAMINA)
+    train.train(RESUME_TRAINING, config)
 
 
 #🚦 OK here is what you need to do to run this:

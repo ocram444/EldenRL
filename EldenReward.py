@@ -9,16 +9,16 @@ class EldenReward:
 
 
     '''Constructor'''
-    def __init__(self, PYTESSERACT_PATH, GAME_MODE, DEBUG_MODE, player_hp, player_stamina):
-        pytesseract.pytesseract.tesseract_cmd = PYTESSERACT_PATH        #Setting the path to pytesseract.exe
-        self.GAME_MODE = GAME_MODE
-        self.DEBUG_MODE = DEBUG_MODE
-        self.max_hp = player_hp                             #This is the hp value of your character. We need this to capture the right length of the hp bar.
+    def __init__(self, config):
+        pytesseract.pytesseract.tesseract_cmd = config["PYTESSERACT_PATH"]        #Setting the path to pytesseract.exe
+        self.GAME_MODE = config["GAME_MODE"]
+        self.DEBUG_MODE = config["DEBUG_MODE"]
+        self.max_hp = config["PLAYER_HP"]                             #This is the hp value of your character. We need this to capture the right length of the hp bar.
         self.prev_hp = 1.0     
         self.curr_hp = 1.0
         self.time_since_dmg_taken = time.time()
         self.death = False
-        self.max_stam = player_stamina                     
+        self.max_stam = config["PLAYER_STAMINA"]                     
         self.curr_stam = 1.0
         self.curr_boss_hp = 1.0
         self.prev_boss_hp = 1.0

@@ -44,7 +44,7 @@ class EldenEnv(gym.Env):
     """Custom Elden Ring Environment that follows gym interface"""
 
 
-    def __init__(self, MONITOR, PYTESSERACT_PATH, DEBUG_MODE, GAME_MODE, BOSS, PLAYER_HP, PLAYER_STAMINA):
+    def __init__(self, config):
         '''Setting up the environment'''
         super(EldenEnv, self).__init__()
 
@@ -56,28 +56,28 @@ class EldenEnv(gym.Env):
             'state': spaces.Box(low=0, high=1, shape=(2,), dtype=np.float32),                                                       #Stamina and helth of the player in percent
         }
         self.observation_space = gym.spaces.Dict(spaces_dict)
-        
+    
 
         '''Setting up the variables'''''
-        pytesseract.pytesseract.tesseract_cmd = PYTESSERACT_PATH        #Setting the path to pytesseract.exe            
-        self.sct = mss.mss()                                            #Initializing CV2 and MSS (used to take screenshots)
-        self.reward = 0                                                 #Reward of the previous step
-        self.rewardGen = EldenReward(PYTESSERACT_PATH, GAME_MODE, DEBUG_MODE, PLAYER_HP, PLAYER_STAMINA)  #Setting up the reward generator class
-        self.death = False                                              #If the agent died
-        self.duel_won = False                                           #If the agent won the duel
-        self.t_start = time.time()                                      #Time when the training started
-        self.done = False                                               #If the game is done
-        self.step_iteration = 0                                              #Current iteration (number of steps taken in this fight)
-        self.first_step = True                                          #If this is the first step
-        self.max_reward = None                                          #The maximum reward that the agent has gotten in this fight
-        self.reward_history = []                                        #Array of the rewards to calculate the average reward of fight
-        self.action_history = []                                        #Array of the actions that the agent took.
-        self.time_since_heal = time.time()                              #Time since the last heal
-        self.action_name = ''                                           #Name of the action for logging
-        self.MONITOR = MONITOR                                          #Monitor to use
-        self.DEBUG_MODE = DEBUG_MODE                                    #If we are in debug mode
-        self.GAME_MODE = GAME_MODE                                      #If we are in PVP or PVE mode
-        if self.GAME_MODE == "PVE": self.walk_to_boss = walkToBoss(BOSS)#Class to walk to the boss
+        pytesseract.pytesseract.tesseract_cmd = config["PYTESSERACT_PATH"]          #Setting the path to pytesseract.exe            
+        self.sct = mss.mss()                                                        #Initializing CV2 and MSS (used to take screenshots)
+        self.reward = 0                                                             #Reward of the previous step
+        self.rewardGen = EldenReward(config)                                        #Setting up the reward generator class
+        self.death = False                                                          #If the agent died
+        self.duel_won = False                                                       #If the agent won the duel
+        self.t_start = time.time()                                                  #Time when the training started
+        self.done = False                                                           #If the game is done
+        self.step_iteration = 0                                                     #Current iteration (number of steps taken in this fight)
+        self.first_step = True                                                      #If this is the first step
+        self.max_reward = None                                                      #The maximum reward that the agent has gotten in this fight
+        self.reward_history = []                                                    #Array of the rewards to calculate the average reward of fight
+        self.action_history = []                                                    #Array of the actions that the agent took.
+        self.time_since_heal = time.time()                                          #Time since the last heal
+        self.action_name = ''                                                       #Name of the action for logging
+        self.MONITOR = config["MONITOR"]                                            #Monitor to use
+        self.DEBUG_MODE = config["DEBUG_MODE"]                                      #If we are in debug mode
+        self.GAME_MODE = config["GAME_MODE"]                                        #If we are in PVP or PVE mode
+        if self.GAME_MODE == "PVE": self.walk_to_boss = walkToBoss(config["BOSS"])  #Class to walk to the boss
         else : 
             self.matchmaking = walkToBoss(99)                           #Matchmaking class for PVP mode
             self.duel_lockon = walkToBoss(100)                          #Lock on class to the player in PVP mode
