@@ -54,7 +54,7 @@ The agent has the following information in the observation space:<br>
 2. Player Health and Stamina in percent.
 3. A list of 10 previous actions.
 
-For sucessfull screen capture the game need to be in Windowed mode 1920x1080 at the top left of your screen. We use the default position when the game is truned to window mode, this means there is a small gap to the left border of your monitor. You can set <code>DEBUG_MODE</code> to true to nail the correct position.
+For sucessfull screen capture the game needs to be in Windowed mode 1920x1080 at the top left of your screen. We use the default position when the game is truned to window mode, this means there is a small gap to the left border of your monitor. You can set <code>DEBUG_MODE</code> to true to nail the correct position.
 
 # Rewards
 The rewards are also all derived from the same screen capture used in the observation. The agent is rewarded/punished for the following things:<br>
