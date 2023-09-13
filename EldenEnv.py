@@ -351,7 +351,7 @@ class EldenEnv(gym.Env):
         '''END FPS LIMITER'''
 
 
-        current_fps = str(round(((1 / (t_end - t_start)) * 10), 0))     #Current SPS (steps per second)
+        current_fps = str(round(((1 / ((t_end - t_start) *10)) * 10), 1))     #Current SPS (steps per second)
 
 
         '''Console output of the step'''
