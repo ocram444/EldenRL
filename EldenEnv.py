@@ -465,4 +465,3 @@ class EldenEnv(gym.Env):
     '''Closing the environment (not used)'''
     def close (self):
         self.cap.release()
-
