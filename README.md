@@ -21,6 +21,11 @@ It runs at ~2.4fps on my i9 13900k CPU with the game running normally on my GPU.
 - You may use this for any of your own projects. Again, it should be fairly easy to expand on the functionality.  
 - I cant upload my basic trained model to GitHub because it is too big a file. Please train your own by setting RESUME = False in train.py
 
+# Videos<br>
+EldenRL PvE showcase: https://www.youtube.com/watch?v=NzTwDO4ehPY<br>
+EldenRL PvP showcase: https://www.youtube.com/watch?v=2Uh1T8FE0y8
+
+
 # Credits
 Huge shoutout to Jameszampa and Lockwo for doing a lot of the ground work. I couldnt have done it without them.  
 If you are interested in this bot you may also like to check out their projects.  
