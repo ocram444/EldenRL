@@ -48,11 +48,13 @@ This is where we calculate the reward based on the observation. The total reward
 This is our reset functionality. In PvE it is called to walk the character from the bonfire to the boss, in PvP it handles matchmaking and player lock-on.
 
 # Observation Space
-All of our observation are derived from screen capturing the game with CV2. This means the agent can only use information based on that, no reading of game states or memory.<br>
+All of our observation are derived from screen capturing the game with CV2. This means the agent can only use information based on that, no reading of game states or reading memory.<br>
 The agent has the following information in the observation space:<br>
 1. A scaled down image of the game.
 2. Player Health and Stamina in percent.
 3. A list of 10 previous actions.
+
+For sucessfull screen capture the game need to be in Windowed mode 1920x1080 at the top left of your screen. We use the default position when the game is truned to window mode, this means there is a small gap to the left border of your monitor. You can set <code>DEBUG_MODE</code> to true to nail the correct position.
 
 # Rewards
 The rewards are also all derived from the same screen capture used in the observation. The agent is rewarded/punished for the following things:<br>
