@@ -33,10 +33,10 @@ Logs for Tensorboard logging can be found in <code>./logs</code>.
 In this section we'll go over the code structure and functionality of the Project.
 
 <b>main.py</b><br>
-This is the main file that can be run to start the codebase. Most user settings can be found in here to make it as simple as possible.
+This is the main file that can be run to start the codebase. Most user settings can be found here to make it as simple as possible.
 
 <b>train.py</b><br>
-This is the center pice of the hole project. This is where the decision making and training actually happens. It should feel very familiar if youve worked on a Reinforcement Learning project before. For this we closely folloed OpenAI's <code>gym</code> structure.
+This is the center pice of the whole project. This is where the decision making and training actually happens. It should feel very familiar if youve worked on a Reinforcement Learning project before. For this we closely folloed OpenAI's <code>gym</code> structure.
 
 <b>EldenEnv.py</b><br>
 This is our Environment. Here we interact with the game (capturing the screen, performing actions and passing the observation/reward back to train.py).
