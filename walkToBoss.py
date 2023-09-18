@@ -25,6 +25,10 @@ class walkToBoss:
                         self.boss5()
                 elif self.BOSS == 6:
                         self.boss6()
+                elif self.BOSS == 7:
+                        self.boss7()
+                elif self.BOSS == 8:
+                        self.boss8()
 
                 #'''PVP'''
                 elif self.BOSS == 99:
@@ -305,6 +309,23 @@ class walkToBoss:
                 pydirectinput.press('f')
                 time.sleep(3.7)
                 print("👉👹 walking #3 lock on to the boss")
+                pydirectinput.press('tab')
+                time.sleep(0.1)
+                print("👉👹 walking done")
+
+        
+        '''8 Malenia blade of miquella'''
+        def boss8(self):
+                self.put_on_lantern()
+                print("👉👹 walking #1 walk to Malenia")
+                pydirectinput.keyDown('shift')
+                pydirectinput.keyDown('w')
+                time.sleep(10)
+                pydirectinput.keyUp('w')
+                pydirectinput.keyUp('shift')
+                pydirectinput.press('f')
+                time.sleep(3.7)
+                print("👉👹 walking #2 lock on to the boss")
                 pydirectinput.press('tab')
                 time.sleep(0.1)
                 print("👉👹 walking done")

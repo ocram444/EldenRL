@@ -7,14 +7,17 @@ if __name__ == '__main__':
         "MONITOR": 1,           #Set the monitor to use (1,2,3)
         "DEBUG_MODE": False,    #Renders the AI vision (pretty scuffed)
         "GAME_MODE": "PVE",     #PVP or PVE
-        "BOSS": 3,              #1-6 for PVE (look at walkToBoss.py for boss names) | Is ignored for GAME_MODE PVP
-        "PLAYER_HP": 396,      #Set the player hp (used for hp bar detection)
-        "PLAYER_STAMINA": 95,  #Set the player stamina (used for stamina bar detection)
+        "BOSS": 8,              #1-6 for PVE (look at walkToBoss.py for boss names) | Is ignored for GAME_MODE PVP
+        "PLAYER_HP": 1679,      #Set the player hp (used for hp bar detection)
+        "PLAYER_STAMINA": 121,  #Set the player stamina (used for stamina bar detection)
         "DESIRED_FPS": 24       #Set the desired fps (used for actions per second) (24 = 2.4 actions per second) #not implemented yet       #My CPU (i9-13900k) can run the training at about 2.4SPS (steps per secons)
     }
-    CREATE_NEW_MODEL = False     #Create a new model or resume training for an existing model
+    CREATE_NEW_MODEL = True     #Create a new model or resume training for an existing model
 
-    
+
     '''Start Training'''
     print("💍 EldenRL 💍")
     train.train(CREATE_NEW_MODEL, config)
+
+
+    #dealing damage to a boss must detect yellow color, not detecting hp and calculating if its less than before

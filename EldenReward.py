@@ -21,7 +21,6 @@ class EldenReward:
         self.max_stam = config["PLAYER_STAMINA"]                     
         self.curr_stam = 1.0
         self.curr_boss_hp = 1.0
-        self.prev_boss_hp = 1.0
         self.time_since_boss_dmg = time.time() 
         self.time_since_pvp_damaged = time.time()
         self.time_alive = time.time()
@@ -98,6 +97,28 @@ class EldenReward:
         return boss_hp
     
 
+    '''Detecting if the boss is damaged in PvE'''           #🚧 This is not implemented yet!!
+    def detect_boss_damaged(self, frame):
+        cut_frame = frame[863:876, 462:1462]
+        
+        lower = np.array([23,210,0])                                            #This filter really inst perfect but its good enough bcause stamina is not that important
+        upper = np.array([25,255,255])                                           #Also Filter
+        hsv = cv2.cvtColor(cut_frame, cv2.COLOR_RGB2HSV)                       #Apply the filter
+        mask = cv2.inRange(hsv, lower, upper)                                   #Also apply
+        matches = np.argwhere(mask==255)                                        #Number for all the white pixels in the mask
+
+
+        #self.render_frame(cut_frame)
+        #self.render_frame(mask)
+
+
+        if len(matches) > 30:                                                   #if there are more than 30 white pixels in the mask, return true
+            return True
+        else:
+            return False
+
+    
+
     '''Detecting if the enemy is damaged in PvP'''
     def detect_pvp_damaged(self, frame):
         cut_frame = frame[150:400, 350:1700]
@@ -133,7 +154,7 @@ class EldenReward:
 
  
     '''Update function that gets called every step and returns the total reward and if the agent died or the boss died'''
-    def update(self, frame):
+    def update(self, frame, first_step):
         #📍 1 Getting current values
         #📍 2 Hp Rewards
         #📍 3 Boss Rewards
@@ -144,7 +165,8 @@ class EldenReward:
         '''📍1 Getting/Setting current values'''
         self.curr_hp = self.get_current_hp(frame)                   
         self.curr_stam = self.get_current_stamina(frame)            
-        self.curr_boss_hp = self.get_boss_hp(frame)           
+        self.curr_boss_hp = self.get_boss_hp(frame)
+        if first_step: self.time_since_dmg_taken = time.time() - 10 #Setting the time_since_dmg_taken to 10 seconds ago so we dont get a negative reward at the start of the game           
 
         self.death = False
         if self.curr_hp <= 0.01 + self.image_detection_tolerance:   #If our hp is below 1% we are dead
@@ -168,8 +190,8 @@ class EldenReward:
         else:
             hp_reward = -420                                                        #Large negative reward for dying
 
-        time_since_taken_dmg_reward = 0                                    
-        if time.time() - self.time_since_dmg_taken > 5:                             #Reward if we have not taken damage for 7 seconds (every step for as long as we dont take damage)
+        time_since_taken_dmg_reward = 0                                  
+        if time.time() - self.time_since_dmg_taken > 5:                             #Reward if we have not taken damage for 5 seconds (every step for as long as we dont take damage)
             time_since_taken_dmg_reward = 25
 
 
@@ -182,7 +204,7 @@ class EldenReward:
             if self.boss_death:                                                     #Large reward if the boss is dead
                 boss_dmg_reward = 420
             else:
-                if self.curr_boss_hp < self.prev_boss_hp - self.image_detection_tolerance  + 0.01:  #Reward if we damaged the boss (small tolerance because its a large bar)
+                if self.detect_boss_damaged(frame):  #Reward if we damaged the boss (small tolerance because its a large bar)
                     boss_dmg_reward = 69
                     self.time_since_boss_dmg = time.time()
                 if time.time() - self.time_since_boss_dmg > 5:                      #Negative reward if we have not damaged the boss for 5 seconds (every step for as long as we dont damage the boss)
@@ -191,10 +213,7 @@ class EldenReward:
 
             percent_through_fight_reward = 0
             if self.curr_boss_hp < 0.97:                                            #Increasing reward for every step we are alive depending on how low the boss hp is
-                percent_through_fight_reward = self.curr_boss_hp * 100 
-
-
-            self.prev_boss_hp = self.curr_boss_hp                                   #Update prev_boss_hp to curr_boss_hp
+                percent_through_fight_reward = self.curr_boss_hp * 15            
 
 
         '''📍4 PVP rewards'''

@@ -206,10 +206,11 @@ class EldenEnv(gym.Env):
             time.sleep(0.4)
             pydirectinput.press('e')
             time.sleep(1.5)
-            #esc
-            pydirectinput.press('esc')
+            pydirectinput.press('left')
             time.sleep(0.5)
-            print('🔥')
+            pydirectinput.press('e')
+            time.sleep(0.5)
+            print('🔄🔥')
 
 
     '''Waiting for the loading screen to end'''
@@ -238,12 +239,12 @@ class EldenEnv(gym.Env):
                 print('⌛❌ Did not leave loading screen #2 (Frozen)')
                 #some sort of error handling here...
                 #break
-            elif not have_been_in_loading_screen and ((time.time() - t_check_frozen_start) > 25):   #We have not entered a loading screen for 25 seconds. (return to bonfire and walk to boss) #⚔️ in pvp we use this for waiting for matchmaking
-                print('⌛✔️ No loading screen found #3')
+            elif not have_been_in_loading_screen and ((time.time() - t_check_frozen_start) > 20):   #We have not entered a loading screen for 25 seconds. (return to bonfire and walk to boss) #⚔️ in pvp we use this for waiting for matchmaking
+                print('⌛🔥 No loading screen found #3')
                 if self.GAME_MODE == "PVE": 
                     self.take_action(99)                #warp back to bonfire
                     t_check_frozen_start = time.time()  #reset the timer
-                                                        #try again by not breaking the loop
+                                                        #try again by not breaking the loop (waiting for loading screen then walk to boss)
                 else:
                     t_check_frozen_start = time.time()  #reset the timer
                                                         #continue waiting for loading screen (matchmaking)
@@ -286,7 +287,7 @@ class EldenEnv(gym.Env):
         '''Grabbing variables'''
         t_start = time.time()    #Start time of this step
         frame = self.grab_screen_shot()                                         #📍 1. Collect the current observation
-        self.reward, self.death, self.boss_death, self.duel_won = self.rewardGen.update(frame) #📍 2. Collect the reward based on the observation (reward of previous step)
+        self.reward, self.death, self.boss_death, self.duel_won = self.rewardGen.update(frame, self.first_step) #📍 2. Collect the reward based on the observation (reward of previous step)
         
 
         if self.DEBUG_MODE:
@@ -363,7 +364,7 @@ class EldenEnv(gym.Env):
             max_reward_with_spaces = str(self.max_reward)
             for i in range(5 - len(max_reward_with_spaces)):
                 max_reward_with_spaces = ' ' + max_reward_with_spaces
-            for i in range(7 - len(str(self.action_name))):
+            for i in range(18 - len(str(self.action_name))):
                 self.action_name = ' ' + self.action_name
             for i in range(5 - len(current_fps)):
                 current_fps = ' ' + current_fps
