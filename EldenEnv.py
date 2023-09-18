@@ -34,6 +34,10 @@ DISCRETE_ACTIONS = {'release_wasd': 'release_wasd',
                     'q+v': 'weapon_art_heavy',
                     'w+c': 'running_attack',
                     'w+v': 'running_heavy',
+                    'w+x': 'running_magic',
+                    'w+shift+space+c' : 'jump_attack',
+                    'w+shift+space+v' : 'jump_strong_attack',
+                    'w+shift+space+x' : 'jump_magic',
                     'e': 'use_item'}
 
 NUMBER_DISCRETE_ACTIONS = len(DISCRETE_ACTIONS)
@@ -193,6 +197,40 @@ class EldenEnv(gym.Env):
             pydirectinput.press('v')
             pydirectinput.keyUp('shift')
             self.action_name = 'running heavy'
+        elif action == 16:                  #running magic
+            pydirectinput.keyDown('shift')
+            pydirectinput.keyDown('w')
+            time.sleep(0.35)
+            pydirectinput.press('x')
+            pydirectinput.keyUp('shift')
+            self.action_name = 'running magic'
+        elif action == 17:                  #jump attack
+            pydirectinput.keyDown('shift')
+            pydirectinput.keyDown('w')
+            time.sleep(0.2)
+            pydirectinput.press('space')
+            time.sleep(0.1)
+            pydirectinput.press('c')
+            pydirectinput.keyUp('shift')
+            self.action_name = 'jump attack'
+        elif action == 18:                  #jump heavy
+            pydirectinput.keyDown('shift')
+            pydirectinput.keyDown('w')
+            time.sleep(0.2)
+            pydirectinput.press('space')
+            time.sleep(0.1)
+            pydirectinput.press('v')
+            pydirectinput.keyUp('shift')
+            self.action_name = 'jump heavy'
+        elif action == 19:                  #jump magic
+            pydirectinput.keyDown('shift')
+            pydirectinput.keyDown('w')
+            time.sleep(0.2)
+            pydirectinput.press('space')
+            time.sleep(0.1)
+            pydirectinput.press('x')
+            pydirectinput.keyUp('shift')
+            self.action_name = 'jump magic'        
         elif action == 16 and time.time() - self.time_since_heal > 1.5: #to prevent spamming heal we only allow it to be pressed every 1.5 seconds
             pydirectinput.press('e')        #item
             self.time_since_heal = time.time()
