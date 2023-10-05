@@ -93,6 +93,8 @@ EldenRL PvP showcase: https://www.youtube.com/watch?v=2Uh1T8FE0y8
 This project is fully open source. It was only possible with the help of multiple contributers laying the groundwork for this project. Feel free to use this code in any way you want.
 If you want to contribute to this project feel free to fork it and let us know on the Discord server.
 
+The next steps would probably be to train a modle for longer than we have and measuring some results. Then adding some new rewards or improving the observations could be a logical next step. Its also possible to swap out reinforcement learning modles with stable_baselines_3 and comparing the results between them.
+
 Huge shoutout to Jameszampa and Lockwo for doing a lot of the ground work. We couldnt have done it without them.  
 If you are interested in this bot you may also like to check out their projects.  
 - EldenRingAI a reinforcement learning bot running on Linux and a dual PC setup. https://github.com/jameszampa/EldenRingAI  
