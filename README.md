@@ -100,4 +100,4 @@ If you are interested in this bot you may also like to check out their projects.
 - EldenRingAI a reinforcement learning bot running on Linux and a dual PC setup. https://github.com/jameszampa/EldenRingAI  
 - EldenBot a supervised learning approach that created a lot of the computer vision groundwork and has a nice video explanaition of the basics on YouTube. https://github.com/lockwo/elden_bot  
 - EldenBot video explanation: https://www.youtube.com/watch?v=ViFgSxzHhRU
-- Discord server for EldenBot: https://discord.com/channels/984553640071155752/984553641815982140
+- Discord server for EldenBot: https://discord.gg/nThwu88Q
