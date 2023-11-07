@@ -87,6 +87,11 @@ class EldenReward:
         mask = cv2.inRange(hsv, lower, upper)
         if self.DEBUG_MODE: self.render_frame(mask)
 
+
+        #self.render_frame(boss_hp_image)
+        #self.render_frame(mask)
+
+
         matches = np.argwhere(mask==255)                                        #Number for all the white pixels in the mask
         boss_hp = len(matches) / (boss_hp_image.shape[1] * boss_hp_image.shape[0])  #Calculating percent of white pixels in the mask (current boss hp in percent)
         
@@ -254,3 +259,36 @@ class EldenReward:
         total_reward = round(total_reward, 3)
 
         return total_reward, self.death, self.boss_death, self.game_won
+    
+
+
+'''Testing code'''
+if __name__ == "__main__":
+    env_config = {
+        "PYTESSERACT_PATH": r'C:\Program Files\Tesseract-OCR\tesseract.exe',    # Set the path to PyTesseract
+        "MONITOR": 1,           #Set the monitor to use (1,2,3)
+        "DEBUG_MODE": False,    #Renders the AI vision (pretty scuffed)
+        "GAME_MODE": "PVE",     #PVP or PVE
+        "BOSS": 8,              #1-6 for PVE (look at walkToBoss.py for boss names) | Is ignored for GAME_MODE PVP
+        "BOSS_HAS_SECOND_PHASE": True,  #Set to True if the boss has a second phase (only for PVE)
+        "PLAYER_HP": 1679,      #Set the player hp (used for hp bar detection)
+        "PLAYER_STAMINA": 121,  #Set the player stamina (used for stamina bar detection)
+        "DESIRED_FPS": 24       #Set the desired fps (used for actions per second) (24 = 2.4 actions per second) #not implemented yet       #My CPU (i9-13900k) can run the training at about 2.4SPS (steps per secons)
+    }
+    reward = EldenReward(env_config)
+
+    IMG_WIDTH = 1920                                #Game capture resolution
+    IMG_HEIGHT = 1080  
+
+    import mss
+    sct = mss.mss()
+    monitor = sct.monitors[1]
+    sct_img = sct.grab(monitor)
+    frame = cv2.cvtColor(np.asarray(sct_img), cv2.COLOR_BGRA2RGB)
+    frame = frame[46:IMG_HEIGHT + 46, 12:IMG_WIDTH + 12]    #cut the frame to the size of the game
+
+    reward.update(frame, True)
+    time.sleep(1)
+    reward.update(frame, False)
+
+        

@@ -38,6 +38,7 @@ DISCRETE_ACTIONS = {'release_wasd': 'release_wasd',
                     'w+shift+space+c' : 'jump_attack',
                     'w+shift+space+v' : 'jump_strong_attack',
                     'w+shift+space+x' : 'jump_magic',
+                    'ctrl + c': 'crouch_attack',
                     'e': 'use_item'}
 
 NUMBER_DISCRETE_ACTIONS = len(DISCRETE_ACTIONS)
@@ -82,6 +83,8 @@ class EldenEnv(gym.Env):
         self.DEBUG_MODE = config["DEBUG_MODE"]                                      #If we are in debug mode
         self.GAME_MODE = config["GAME_MODE"]                                        #If we are in PVP or PVE mode
         self.DESIRED_FPS = config["DESIRED_FPS"]                                    #Desired FPS (not implemented yet)
+        self.BOSS_HAS_SECOND_PHASE = config["BOSS_HAS_SECOND_PHASE"]                #If the boss has a second phase
+        self.are_in_second_phase = False                                            #If we are in the second phase of the boss
         if self.GAME_MODE == "PVE": self.walk_to_boss = walkToBoss(config["BOSS"])  #Class to walk to the boss
         else : 
             self.matchmaking = walkToBoss(99)                           #Matchmaking class for PVP mode
@@ -115,7 +118,7 @@ class EldenEnv(gym.Env):
         cv2.imshow('debug-render', frame)
         cv2.waitKey(100)
         cv2.destroyAllWindows()
-    
+        
     
     '''Defining the actions that the agent can take'''
     def take_action(self, action):
@@ -230,8 +233,13 @@ class EldenEnv(gym.Env):
             time.sleep(0.1)
             pydirectinput.press('x')
             pydirectinput.keyUp('shift')
-            self.action_name = 'jump magic'        
-        elif action == 16 and time.time() - self.time_since_heal > 1.5: #to prevent spamming heal we only allow it to be pressed every 1.5 seconds
+            self.action_name = 'jump magic' 
+        elif action == 20:                  #crouch attack  
+            pydirectinput.keyDown('ctrl')
+            time.sleep(0.1)
+            pydirectinput.press('c')   
+            self.action_name = 'crouch attack'  
+        elif action == 21 and time.time() - self.time_since_heal > 1.5: #to prevent spamming heal we only allow it to be pressed every 1.5 seconds
             pydirectinput.press('e')        #item
             self.time_since_heal = time.time()
             self.action_name = 'heal'
@@ -249,6 +257,17 @@ class EldenEnv(gym.Env):
             pydirectinput.press('e')
             time.sleep(0.5)
             print('🔄🔥')
+        
+    
+    '''Checking if we are in the boss second phase'''
+    def check_for_second_phase(self):
+        frame = self.grab_screen_shot()
+        self.reward, self.death, self.boss_death, self.duel_won = self.rewardGen.update(frame, self.first_step) #perform eldenreward update to get the current status of the boss
+
+        if not self.boss_death:                 #if the boss is not dead when we check for the second phase, we are in the second phase
+            self.are_in_second_phase = True
+        else:                                   #if the boss is dead we can simply warp back to the bonfire
+            self.are_in_second_phase = False
 
 
     '''Waiting for the loading screen to end'''
@@ -278,12 +297,23 @@ class EldenEnv(gym.Env):
                 #some sort of error handling here...
                 #break
             elif not have_been_in_loading_screen and ((time.time() - t_check_frozen_start) > 20):   #We have not entered a loading screen for 25 seconds. (return to bonfire and walk to boss) #⚔️ in pvp we use this for waiting for matchmaking
-                print('⌛🔥 No loading screen found #3')
-                if self.GAME_MODE == "PVE": 
-                    self.take_action(99)                #warp back to bonfire
-                    t_check_frozen_start = time.time()  #reset the timer
-                                                        #try again by not breaking the loop (waiting for loading screen then walk to boss)
+                if self.GAME_MODE == "PVE":
+                    if self.BOSS_HAS_SECOND_PHASE:
+                        self.check_for_second_phase()
+                        if self.are_in_second_phase:
+                            print('⌛👹 Second phase found #3')
+                            break
+                        else:
+                            print('⌛🔥 No loading screen found #3')
+                            self.take_action(99)                #warp back to bonfire
+                            t_check_frozen_start = time.time()  #reset the timer
+                    else:
+                        print('⌛🔥 No loading screen found #3')
+                        self.take_action(99)                #warp back to bonfire
+                        t_check_frozen_start = time.time()  #reset the timer
+                                                            #try again by not breaking the loop (waiting for loading screen then walk to boss)
                 else:
+                    print('⌛❌ No loading screen found #3')
                     t_check_frozen_start = time.time()  #reset the timer
                                                         #continue waiting for loading screen (matchmaking)
         
@@ -454,9 +484,16 @@ class EldenEnv(gym.Env):
             
 
         '''📍 4. Walking to the boss'''         #⚔️we already did this in 📍 3. for PVP
-        if self.GAME_MODE == "PVE":               
-            print("🔄👹 walking to boss")
-            self.walk_to_boss.perform()          #This is hard coded in walkToBoss.py
+        if self.GAME_MODE == "PVE":
+            if self.BOSS_HAS_SECOND_PHASE:
+                if self.are_in_second_phase:
+                    print("🔄👹 already in arena")
+                else:
+                    print("🔄👹 walking to boss")
+                    self.walk_to_boss.perform()
+            else:                
+                print("🔄👹 walking to boss")
+                self.walk_to_boss.perform()          #This is hard coded in walkToBoss.py
 
         if self.death:                           #Death counter in txt file
             f = open("deathCounter.txt", "r")

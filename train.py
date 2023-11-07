@@ -19,7 +19,7 @@ def train(CREATE_NEW_MODEL, config):
 		os.makedirs(f"logs/{model_name}/")
 	models_dir = f"models/{model_name}/"
 	logdir = f"logs/{model_name}/"			
-	model_path = f"{models_dir}/PPO-1.zip"
+	model_path = f"{models_dir}/PPO-1"
 	print("🧠 Folder structure created...")
 
 
@@ -47,5 +47,3 @@ def train(CREATE_NEW_MODEL, config):
 		model.learn(total_timesteps=TIMESTEPS, reset_num_timesteps=False, tb_log_name="PPO", log_interval=1)
 		model.save(f"{models_dir}/PPO-1")
 		print(f"🧠 Model updated...")
-		
-
