@@ -234,9 +234,10 @@ class EldenEnv(gym.Env):
             pydirectinput.press('x')
             pydirectinput.keyUp('shift')
             self.action_name = 'jump magic' 
-        elif action == 20:                  #crouch attack  
+        elif action == 20:                  #crouch attack
+            time.sleep(0.1)  
             pydirectinput.keyDown('ctrl')
-            time.sleep(0.1)
+            time.sleep(0.2)
             pydirectinput.press('c')   
             pydirectinput.keyUp('ctrl')
             self.action_name = 'crouch attack'  
