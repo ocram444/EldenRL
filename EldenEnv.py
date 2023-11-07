@@ -238,6 +238,7 @@ class EldenEnv(gym.Env):
             pydirectinput.keyDown('ctrl')
             time.sleep(0.1)
             pydirectinput.press('c')   
+            pydirectinput.keyUp('ctrl')
             self.action_name = 'crouch attack'  
         elif action == 21 and time.time() - self.time_since_heal > 1.5: #to prevent spamming heal we only allow it to be pressed every 1.5 seconds
             pydirectinput.press('e')        #item
