@@ -20,6 +20,3 @@ if __name__ == '__main__':
     '''Start Training'''
     print("💍 EldenRL 💍")
     train.train(CREATE_NEW_MODEL, env_config)
-
-
-    #dealing damage to a boss must detect yellow color, not detecting hp and calculating if its less than before
